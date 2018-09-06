@@ -9,7 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.CursorAdapter;
+
+import com.example.husseiny.car.database.CarContract.CarEntity;
 
 /**
  * Created by husseiny on 7/31/2018.
@@ -24,8 +25,8 @@ public class CarProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(CarContract.CONTENT_AUTHORITY, CarContract.CarEntity.TABLE_NAME, CARS);
-        sUriMatcher.addURI(CarContract.CONTENT_AUTHORITY, CarContract.CarEntity.TABLE_NAME + "/#", CAR_ID);
+        sUriMatcher.addURI(CarContract.CONTENT_AUTHORITY, CarEntity.TABLE_NAME, CARS);
+        sUriMatcher.addURI(CarContract.CONTENT_AUTHORITY, CarEntity.TABLE_NAME + "/#", CAR_ID);
     }
 
     private CarDbHelper mDbHelper;
@@ -46,13 +47,13 @@ public class CarProvider extends ContentProvider {
 
         switch (match){
             case CARS:
-                cursor = database.query(CarContract.CarEntity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = database.query(CarEntity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
                 return cursor;
             case CAR_ID:
-                selection = CarContract.CarEntity._ID + "=?";
+                selection = CarEntity._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
-                cursor = database.query(CarContract.CarEntity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = database.query(CarEntity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
                 return cursor;
             default:
@@ -68,7 +69,7 @@ public class CarProvider extends ContentProvider {
 
         switch (sUriMatcher.match(uri)){
             case CARS:
-                long id = database.insert(CarContract.CarEntity.TABLE_NAME, null, contentValues);
+                long id = database.insert(CarEntity.TABLE_NAME, null, contentValues);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return ContentUris.withAppendedId(uri, id);
             default:
@@ -83,13 +84,13 @@ public class CarProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)){
             case CARS:
                 getContext().getContentResolver().notifyChange(uri, null);
-                return database.delete(CarContract.CarEntity.TABLE_NAME, null, null);
+                return database.delete(CarEntity.TABLE_NAME, null, null);
                 //return deletedRows;
             case CAR_ID:
-                selection = CarContract.CarEntity._ID + "=?";
+                selection = CarEntity._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 getContext().getContentResolver().notifyChange(uri, null);
-                return database.delete(CarContract.CarEntity.TABLE_NAME, selection, selectionArgs);
+                return database.delete(CarEntity.TABLE_NAME, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Cannot delete raws with uri " + uri);
         }
@@ -102,18 +103,26 @@ public class CarProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)){
             case CARS:
                 getContext().getContentResolver().notifyChange(uri, null);
-                return database.update(CarContract.CarEntity.TABLE_NAME, contentValues, null, null);
+                return database.update(CarEntity.TABLE_NAME, contentValues, null, null);
             case CAR_ID:
-                selection = CarContract.CarEntity._ID + "=?";
+                selection = CarEntity._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 getContext().getContentResolver().notifyChange(uri, null);
-                return database.update(CarContract.CarEntity.TABLE_NAME, contentValues, selection, selectionArgs);
+                return database.update(CarEntity.TABLE_NAME, contentValues, selection, selectionArgs);
         }
         return 0;
     }
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match){
+            case CARS:
+                return CarEntity.CONTENT_LIST_TYPE;
+            case CAR_ID:
+                return CarEntity.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknow URI " + uri + " with match " + match);
+        }
     }
 }
