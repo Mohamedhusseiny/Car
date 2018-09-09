@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.husseiny.car.database.CarContract.CarEntity;
 
@@ -84,7 +85,9 @@ public class CarProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)){
             case CARS:
                 getContext().getContentResolver().notifyChange(uri, null);
-                return database.delete(CarEntity.TABLE_NAME, null, null);
+                database.delete(CarEntity.TABLE_NAME, null, null);
+                database.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" + CarEntity.TABLE_NAME + "'");
+                return 0;
                 //return deletedRows;
             case CAR_ID:
                 selection = CarEntity._ID + "=?";

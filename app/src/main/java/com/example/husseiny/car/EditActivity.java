@@ -18,21 +18,22 @@ import android.widget.Toast;
 import com.example.husseiny.car.database.CarContract.CarEntity;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Stream;
 
 public class EditActivity extends AppCompatActivity {
 
+    Uri mUri;
+
     String selection;
+
+    boolean backBool = false;
 
     EditText model;
     Spinner brand;
     EditText price;
     EditText info;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +41,30 @@ public class EditActivity extends AppCompatActivity {
 
         // connect views to java
         model = findViewById(R.id.model_id);
-        price =  findViewById(R.id.price_id);
-        brand =  findViewById(R.id.brand_spin);
-        info =  findViewById(R.id.info_id);
+        price = findViewById(R.id.price_id);
+        brand = findViewById(R.id.brand_spin);
+        info = findViewById(R.id.info_id);
 
+        // Setting spinner items
         setUpSpinner();
+
+        // Define intent to recieve URI from MainActivity
+        Intent intent = getIntent();
+        mUri = intent.getData();
+
+        if (mUri != null) {
+            setTitle("Update Car");
+        } else {
+            setTitle("Add Car");
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Intent back = new Intent(this, MainActivity.class);
+        startActivity(back);
+
     }
 
     private void setUpSpinner() {
@@ -63,14 +83,15 @@ public class EditActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selection = (String) parent.getItemAtPosition(position);
             }
+
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                selection = "Unknown";
+                selection = (String) parent.getItemAtPosition(0);
             }
         });
 
-        
+
     }
 
     @Override
@@ -81,10 +102,10 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.add_option:
                 insertCar();
-            return true;
+                return true;
         }
         return true;
     }
@@ -97,17 +118,17 @@ public class EditActivity extends AppCompatActivity {
         // Check if the model view is not empty
         if (!TextUtils.isEmpty(model.getText())) {
             values.put(CarEntity.COLUMN_CAR_NAME, model.getText().toString());
-        }
+        } else { Toast.makeText(this, "Please, insert valid data!", Toast.LENGTH_SHORT).show(); return; }
 
         // Check if the price view is not empty
         if (!TextUtils.isEmpty(price.getText())) {
             values.put(CarEntity.COLUMN_CAR_PRICE, price.getText().toString());
-        }
+        } else { Toast.makeText(this, "Please, insert valid data!", Toast.LENGTH_SHORT).show(); return; }
 
-        // Check if the model view is not empty
-        if (!TextUtils.isEmpty(model.getText())) {
+        // Check if the description view is not empty
+        if (!TextUtils.isEmpty(info.getText())) {
             values.put(CarEntity.COLUMN_CAR_DESC, info.getText().toString());
-        }
+        } else { Toast.makeText(this, "Please, insert valid data!", Toast.LENGTH_SHORT).show(); return; }
 
         // Add current date
         Date date = Calendar.getInstance().getTime();
@@ -115,20 +136,19 @@ public class EditActivity extends AppCompatActivity {
 
         values.put(CarEntity.COLUMN_CAR_DATE, mDateFormat.format(date));
 
-        Uri sUri =  getContentResolver().insert(CarEntity.CONTENT_URI, values);
-        if(sUri != null){
-            Toast.makeText(this, "A car is added scucessfully!", Toast.LENGTH_SHORT).show();
-            Intent back = new Intent(this, MainActivity.class);
-            startActivity(back);
+        if (mUri == null) {
+            Uri sUri = getContentResolver().insert(CarEntity.CONTENT_URI, values);
+            if (sUri != null) {
+                Toast.makeText(this, "A car is added to your store!", Toast.LENGTH_SHORT).show();
+                onStop();
+            }
+        } else {
+            int updateRecords = getContentResolver().update(mUri, values, null, null);
+            if (updateRecords > 0) {
+                Toast.makeText(this, "A car is updated!", Toast.LENGTH_SHORT).show();
+                onStop();
+            }
         }
-        else {
-            model.setText("");
-            brand.setSelection(0);
-            price.setText("");
-            info.setText("");
-            Toast.makeText(this, "Please, insert valid data!", Toast.LENGTH_SHORT).show();
-        }
-
 
     }
 }
