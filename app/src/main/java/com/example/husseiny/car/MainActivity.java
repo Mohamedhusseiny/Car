@@ -16,7 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.husseiny.car.database.CarContract.CarEntity;
@@ -40,9 +42,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(nextActivity);
             }
         });
+        
 
-        // TODO: Set Empty ListView
         display = (ListView) findViewById(R.id.list_view);
+        /** set empty view to null is necessary because when backing from edit activity(adding new car),
+         no need to show empty view again before cursor loading data in the list view **/
+        display.setEmptyView(null);
         carCursorAdapter = new CarCursorAdapter(this, null);
         display.setAdapter(carCursorAdapter);
 
@@ -97,7 +102,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_dummy_item_option:
+            case R.id.search_option:
+                // TODO: Search algorithm
+            case R.id.share_option:
                 // TODO: Share Intent
                 return true;
             case R.id.delete_item_option:
@@ -119,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        ProgressBar indicator = findViewById(R.id.loader_indicator);
+        display.setEmptyView(findViewById(R.id.empty_view));
+        indicator.setVisibility(View.GONE);
         carCursorAdapter.swapCursor(cursor);
     }
 
