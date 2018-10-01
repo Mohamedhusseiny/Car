@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(nextActivity);
             }
         });
-        
+
+
 
         display = (ListView) findViewById(R.id.list_view);
         /** set empty view to null is necessary because when backing from edit activity(adding new car),

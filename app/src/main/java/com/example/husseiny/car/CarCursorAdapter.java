@@ -27,11 +27,11 @@ public class CarCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        TextView carModel = (TextView) view.findViewById(R.id.model_item_id);
-        TextView carBrand = (TextView) view.findViewById(R.id.brand_item_id);
-        TextView carPrice = (TextView) view.findViewById(R.id.price_item_id);
-        TextView carDesc = (TextView) view.findViewById(R.id.desc_item_id);
-        TextView carDate = (TextView) view.findViewById(R.id.date_item_id);
+        TextView carModel = view.findViewById(R.id.model_content);
+        TextView carBrand = view.findViewById(R.id.brand_content);
+        TextView carPrice = view.findViewById(R.id.price_content);
+        TextView carDesc = view.findViewById(R.id.info_content);
+        TextView carDate = view.findViewById(R.id.date_item_id);
 
 
         String model = cursor.getString(cursor.getColumnIndex(CarContract.CarEntity.COLUMN_CAR_NAME));
@@ -40,10 +40,10 @@ public class CarCursorAdapter extends CursorAdapter {
         String desc = cursor.getString(cursor.getColumnIndex(CarContract.CarEntity.COLUMN_CAR_DESC));
         String date = cursor.getString(cursor.getColumnIndex(CarContract.CarEntity.COLUMN_CAR_DATE));
 
-        carModel.setText("Model: " + model);
-        carBrand.setText("Brand: " + brand);
-        carPrice.setText("Price: " + String.valueOf(price) + "$");
-        carDesc.setText("Description: " + desc);
+        carModel.setText(model);
+        carBrand.setText(brand);
+        carPrice.setText(String.valueOf(price) + "$");
+        carDesc.setText(desc);
         carDate.setText(date);
     }
 }

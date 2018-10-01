@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".EditActivity"
             android:label="Add car" />
 
