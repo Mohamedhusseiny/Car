@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/search_option"
-        android:icon="@drawable/ic_search"
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_menu_search"
         android:title=""
         app:showAsAction="always">
 
     </item>
     <item
-        android:id="@+id/share_option"
-        android:icon="@drawable/ic_share"
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_menu_share"
         android:title=""
         app:showAsAction="always">
     </item>
     <item
-        android:id="@+id/delete_item_option"
+        android:id="@+id/menu_delete_items"
         android:title="Delete all cars"
         app:showAsAction="never">
     </item>

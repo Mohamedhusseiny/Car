@@ -6,90 +6,92 @@
 
     <!-- Model View -->
     <TextView
-        android:id="@+id/model_item"
+        android:id="@+id/text_model"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:textColor="@color/colorPrimary"
         android:text="Model "
-        android:textStyle="bold"
         android:textSize="16dp" />
 
     <TextView
-        android:id="@+id/model_content"
-        android:layout_toRightOf="@id/model_item"
+        android:id="@+id/text_model_content"
+        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/text_model"
         android:layout_marginTop="6dp"
-        android:textColor="@color/colorAccent"
         android:textSize="16dp" />
 
     <!-- Date View -->
     <TextView
-        android:id="@+id/date_item_id"
+        android:id="@+id/text_date"
+        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="16dp"
         android:layout_marginRight="12dp"
-        android:textColor="@color/colorAccent"
         android:textSize="16dp" />
 
     <!-- Brand View -->
     <TextView
-        android:id="@+id/brand_item"
-        android:layout_below="@+id/model_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/text_brand"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_model"
         android:text="Brand "
         android:textSize="16dp" />
     <TextView
-        android:id="@+id/brand_content"
-        android:layout_toRightOf="@id/brand_item"
-        android:layout_below="@+id/model_content"
+        android:id="@+id/text_brand_content"
+        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:layout_toRightOf="@id/text_brand"
+        android:layout_below="@+id/text_model_content"
         android:textSize="16dp" />
 
     <!-- Price View -->
     <TextView
-        android:id="@+id/price_item"
-        android:layout_below="@+id/brand_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/text_price"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_brand"
         android:text="Price "
         android:textSize="16dp" />
     <TextView
-        android:id="@+id/price_content"
-        android:layout_toRightOf="@id/price_item"
-        android:layout_below="@+id/brand_content"
+        android:id="@+id/text_price_content"
+        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:layout_toRightOf="@id/text_price"
+        android:layout_below="@+id/text_brand_content"
         android:textSize="16dp" />
 
     <!-- Description View -->
     <TextView
-        android:id="@+id/info_item"
-        android:layout_below="@+id/price_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/text_info"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_price"
+        android:layout_marginBottom="6dp"
         android:text="Description "
         android:textSize="16dp" />
     <TextView
-        android:id="@+id/info_content"
-        android:layout_toRightOf="@id/info_item"
-        android:layout_below="@+id/price_content"
+        android:id="@+id/text_info_content"
+        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/text_price_content"
+        android:layout_toRightOf="@id/text_info"
+        android:layout_marginBottom="6dp"
         android:textSize="16dp" />
 
 </RelativeLayout>

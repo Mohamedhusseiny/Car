@@ -26,9 +26,6 @@
             android:authorities="com.example.android.car"
             android:exported="false" />
 
-        <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".DetailedActivity"></activity>
     </application>
 
 </manifest>

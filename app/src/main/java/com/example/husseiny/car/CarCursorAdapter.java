@@ -21,17 +21,17 @@ public class CarCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        return LayoutInflater.from(context).inflate(R.layout.list_item, viewGroup, false);
+        return LayoutInflater.from(context).inflate(R.layout.item_car, viewGroup, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        TextView carModel = view.findViewById(R.id.model_content);
-        TextView carBrand = view.findViewById(R.id.brand_content);
-        TextView carPrice = view.findViewById(R.id.price_content);
-        TextView carDesc = view.findViewById(R.id.info_content);
-        TextView carDate = view.findViewById(R.id.date_item_id);
+        TextView carModel = view.findViewById(R.id.text_model_content);
+        TextView carBrand = view.findViewById(R.id.text_brand_content);
+        TextView carPrice = view.findViewById(R.id.text_price_content);
+        TextView carDesc = view.findViewById(R.id.text_info_content);
+        TextView carDate = view.findViewById(R.id.text_date);
 
 
         String model = cursor.getString(cursor.getColumnIndex(CarContract.CarEntity.COLUMN_CAR_NAME));

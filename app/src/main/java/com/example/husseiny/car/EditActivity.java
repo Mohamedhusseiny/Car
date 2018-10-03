@@ -27,8 +27,6 @@ public class EditActivity extends AppCompatActivity {
 
     String selection;
 
-    boolean backBool = false;
-
     EditText model;
     Spinner brand;
     EditText price;
@@ -40,10 +38,10 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         // connect views to java
-        model = findViewById(R.id.model_id);
-        price = findViewById(R.id.price_id);
-        brand = findViewById(R.id.brand_spin);
-        info = findViewById(R.id.info_id);
+        model = findViewById(R.id.edit_model);
+        price = findViewById(R.id.edit_price);
+        brand = findViewById(R.id.spinner_brand);
+        info = findViewById(R.id.edit_info);
 
         // Setting spinner items
         setUpSpinner();
@@ -67,9 +65,25 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add:
+                insertCar();
+                return true;
+        }
+        return true;
+    }
+
+    // TODO: Make Custom Spinner
     private void setUpSpinner() {
-        // TODO: edit spinner internal style
-        Spinner spinner = (Spinner) findViewById(R.id.brand_spin);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_brand);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.brands, android.R.layout.simple_spinner_item);
@@ -92,22 +106,6 @@ public class EditActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.update_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_option:
-                insertCar();
-                return true;
-        }
-        return true;
     }
 
     private void insertCar() {
